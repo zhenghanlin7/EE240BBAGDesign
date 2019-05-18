@@ -1,0 +1,17 @@
+Starting Single Run, Sweeps and Corners...
+
+Current time: Wed May 15 20:27:14 2019 
+Best design point: 1
+Design specs: 
+	bag240:tb_opamp_cmfb_cs:1	corner	Nominal - 
+	gain_dB		22.56
+	bandwidth		368.2M
+	unity_gain_freq		3.905G
+	phase_margin		71.32
+Design parameters: 
+
+Interactive.4
+Number of points completed: 1
+Number of simulation errors: 0
+Interactive.4 completed. 
+Current time: Wed May 15 20:27:23 2019 

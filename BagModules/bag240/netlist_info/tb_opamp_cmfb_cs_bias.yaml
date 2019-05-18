@@ -1,0 +1,92 @@
+lib_name: bag240
+cell_name: tb_opamp_cmfb_cs_bias
+pins: [ "vdd", "vref", "vin", "vss", "vip" ]
+instances:
+  V10:
+    lib_name: analogLib
+    cell_name: vdc
+    instpins:
+      PLUS:
+        direction: inputOutput
+        net_name: "vin"
+        num_bits: 1
+      MINUS:
+        direction: inputOutput
+        net_name: "vss"
+        num_bits: 1
+  V9:
+    lib_name: analogLib
+    cell_name: vdc
+    instpins:
+      PLUS:
+        direction: inputOutput
+        net_name: "vss"
+        num_bits: 1
+      MINUS:
+        direction: inputOutput
+        net_name: "gnd!"
+        num_bits: 1
+  V6:
+    lib_name: analogLib
+    cell_name: vdc
+    instpins:
+      PLUS:
+        direction: inputOutput
+        net_name: "vref"
+        num_bits: 1
+      MINUS:
+        direction: inputOutput
+        net_name: "vss"
+        num_bits: 1
+  V0:
+    lib_name: analogLib
+    cell_name: vdc
+    instpins:
+      PLUS:
+        direction: inputOutput
+        net_name: "vdd"
+        num_bits: 1
+      MINUS:
+        direction: inputOutput
+        net_name: "vss"
+        num_bits: 1
+  I1:
+    lib_name: analogLib
+    cell_name: gnd
+    instpins:
+      gnd!:
+        direction: inputOutput
+        net_name: "gnd!"
+        num_bits: 1
+  PIN4:
+    lib_name: basic
+    cell_name: iopin
+    instpins: {}
+  PIN0:
+    lib_name: basic
+    cell_name: iopin
+    instpins: {}
+  PIN2:
+    lib_name: basic
+    cell_name: iopin
+    instpins: {}
+  PIN3:
+    lib_name: basic
+    cell_name: iopin
+    instpins: {}
+  PIN1:
+    lib_name: basic
+    cell_name: iopin
+    instpins: {}
+  V1:
+    lib_name: analogLib
+    cell_name: vsin
+    instpins:
+      PLUS:
+        direction: inputOutput
+        net_name: "vip"
+        num_bits: 1
+      MINUS:
+        direction: inputOutput
+        net_name: "vss"
+        num_bits: 1

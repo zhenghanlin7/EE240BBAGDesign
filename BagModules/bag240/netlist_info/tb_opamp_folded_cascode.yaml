@@ -1,0 +1,144 @@
+lib_name: bag240
+cell_name: tb_opamp_folded_cascode
+pins: [  ]
+instances:
+  I4:
+    lib_name: bag240
+    cell_name: opamp_cmfb_cs
+    instpins:
+      vin:
+        direction: input
+        net_name: "vinref"
+        num_bits: 1
+      vref:
+        direction: inputOutput
+        net_name: "vref"
+        num_bits: 1
+      vo:
+        direction: output
+        net_name: "net06"
+        num_bits: 1
+      vss:
+        direction: inputOutput
+        net_name: "vss"
+        num_bits: 1
+      vdd:
+        direction: inputOutput
+        net_name: "vdd"
+        num_bits: 1
+      vip:
+        direction: input
+        net_name: "net012"
+        num_bits: 1
+  R1:
+    lib_name: analogLib
+    cell_name: res
+    instpins:
+      MINUS:
+        direction: inputOutput
+        net_name: "net012"
+        num_bits: 1
+      PLUS:
+        direction: inputOutput
+        net_name: "voutp"
+        num_bits: 1
+  R0:
+    lib_name: analogLib
+    cell_name: res
+    instpins:
+      MINUS:
+        direction: inputOutput
+        net_name: "net012"
+        num_bits: 1
+      PLUS:
+        direction: inputOutput
+        net_name: "voutn"
+        num_bits: 1
+  I6:
+    lib_name: bag240
+    cell_name: tb_opamp_folded_cascode_bias
+    instpins:
+      vinref:
+        direction: inputOutput
+        net_name: "vinref"
+        num_bits: 1
+      vip:
+        direction: inputOutput
+        net_name: "vip"
+        num_bits: 1
+      VBNCAS:
+        direction: inputOutput
+        net_name: "VBNCAS"
+        num_bits: 1
+      VBPCAS:
+        direction: inputOutput
+        net_name: "VBPCAS"
+        num_bits: 1
+      vin:
+        direction: inputOutput
+        net_name: "vin"
+        num_bits: 1
+      vss:
+        direction: inputOutput
+        net_name: "vss"
+        num_bits: 1
+      VBN:
+        direction: inputOutput
+        net_name: "VBN"
+        num_bits: 1
+      vref:
+        direction: inputOutput
+        net_name: "vref"
+        num_bits: 1
+      vdd:
+        direction: inputOutput
+        net_name: "vdd"
+        num_bits: 1
+  I0:
+    lib_name: bag240
+    cell_name: opamp_folded_cascode
+    instpins:
+      VBPCAS:
+        direction: input
+        net_name: "VBPCAS"
+        num_bits: 1
+      VBN:
+        direction: input
+        net_name: "VBN"
+        num_bits: 1
+      VBNCAS:
+        direction: input
+        net_name: "VBNCAS"
+        num_bits: 1
+      vref:
+        direction: inputOutput
+        net_name: "vref"
+        num_bits: 1
+      cmfb:
+        direction: input
+        net_name: "net06"
+        num_bits: 1
+      vss:
+        direction: inputOutput
+        net_name: "vss"
+        num_bits: 1
+      vdd:
+        direction: inputOutput
+        net_name: "vdd"
+        num_bits: 1
+      von:
+        direction: output
+        net_name: "voutn"
+        num_bits: 1
+      vop:
+        direction: output
+        net_name: "voutp"
+        num_bits: 1
+      vin:
+        direction: input
+        net_name: "vin"
+        num_bits: 1
+      vip:
+        direction: input
+        net_name: "vip"
+        num_bits: 1

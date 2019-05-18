@@ -1,0 +1,434 @@
+<?xml version="1.0"?>
+<setupdb version="6">data
+	<active>Active Setup
+		<corners>
+			<corner enabled="1">_default</corner>
+		</corners>
+		<extensions>
+			<extension>Parasitics
+				<callback>_parSetupDBExtensionCB</callback>
+				<iconvalue></iconvalue>
+				<icontype></icontype>
+			</extension>
+		</extensions>
+		<currentmode>Single Run, Sweeps and Corners</currentmode>
+		<overwritehistory>0</overwritehistory>
+		<tests>
+			<test>bag240:tb_opamp_folded_cascode:1
+				<tool>ADE</tool>
+				<tooloptions>
+					<option>cell
+						<value>tb_opamp_folded_cascode</value>
+					</option>
+					<option>lib
+						<value>bag240</value>
+					</option>
+					<option>sim
+						<value>spectre</value>
+					</option>
+					<option>view
+						<value>schematic</value>
+					</option>
+					<option>path
+						<value>$AXL_SETUPDB_DIR/test_states</value>
+					</option>
+					<option>state
+						<value>bag240:tb_opamp_folded_cascode:1_active</value>
+					</option>
+				</tooloptions>
+				<origoptions>
+					<option>cell
+						<value>tb_opamp_folded_cascode</value>
+					</option>
+					<option>lib
+						<value>bag240</value>
+					</option>
+					<option>sim
+						<value>spectre</value>
+					</option>
+					<option>view
+						<value>schematic</value>
+					</option>
+					<option>path
+						<value>$AXL_SETUPDB_DIR/test_states</value>
+					</option>
+					<option>state
+						<value>tmpstate.1027100827</value>
+					</option>
+				</origoptions>
+			</test>
+		</tests>
+		<vars>
+			<var>amp
+				<value>200m</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>vdd
+				<value>1.2</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>Rsense
+				<value>5K</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>cm_cap
+				<value>300f</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>L_in
+				<value>400n</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>L_N
+				<value>300n</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>L_P
+				<value>300n</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>W_in
+				<value>480n</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>W_N
+				<value>360n</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>W_P
+				<value>360n</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>vincm
+				<value>375m</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>N_in
+				<value>58</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>N_P
+				<value>6</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>N_PCAS
+				<value>6</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>N_NCAS
+				<value>6</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>N_N
+				<value>36</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>N_OS
+				<value>60</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>N_OSL
+				<value>20</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>VBPCAS
+				<value>550m</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>VBNCAS
+				<value>740m</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>VBN
+				<value>560m</value>
+				<dependentTests>
+					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+		</vars>
+		<overwritehistoryname>Interactive.0</overwritehistoryname>
+		<plottingoptions>
+			<plottingoption>plottype
+				<value>None</value>
+			</plottingoption>
+			<plottingoption>usewaveformtemplate
+				<value>no</value>
+			</plottingoption>
+			<plottingoption>waveformtemplate
+				<value></value>
+			</plottingoption>
+			<plottingoption>allplottingtemplates
+				<value></value>
+			</plottingoption>
+			<plottingoption>defaultplottingtemplate
+				<value></value>
+			</plottingoption>
+		</plottingoptions>
+	</active>
+	<history>History
+		<historyentry assemblerOrExplorer="adexl" roOrView="view">Interactive.0
+			<checkpoint>
+				<corners>
+					<corner enabled="1">_default</corner>
+				</corners>
+				<extensions>
+					<extension>Parasitics
+						<callback>_parSetupDBExtensionCB</callback>
+						<iconvalue></iconvalue>
+						<icontype></icontype>
+					</extension>
+				</extensions>
+				<currentmode>Single Run, Sweeps and Corners</currentmode>
+				<overwritehistory>0</overwritehistory>
+				<tests>
+					<test>bag240:tb_opamp_folded_cascode:1
+						<tool>ADE</tool>
+						<tooloptions>
+							<option>cell
+								<value>tb_opamp_folded_cascode</value>
+							</option>
+							<option>lib
+								<value>bag240</value>
+							</option>
+							<option>sim
+								<value>spectre</value>
+							</option>
+							<option>view
+								<value>schematic</value>
+							</option>
+							<option>path
+								<value>$AXL_SETUPDB_DIR/test_states</value>
+							</option>
+							<option>state
+								<value>bag240:tb_opamp_folded_cascode:1_tmpstate.1027100827_Interactive.0</value>
+							</option>
+						</tooloptions>
+						<origoptions>
+							<option>cell
+								<value>tb_opamp_folded_cascode</value>
+							</option>
+							<option>lib
+								<value>bag240</value>
+							</option>
+							<option>sim
+								<value>spectre</value>
+							</option>
+							<option>view
+								<value>schematic</value>
+							</option>
+							<option>path
+								<value>$AXL_SETUPDB_DIR/test_states</value>
+							</option>
+							<option>state
+								<value>tmpstate.1027100827</value>
+							</option>
+						</origoptions>
+					</test>
+				</tests>
+				<vars>
+					<var>amp
+						<value>200m</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>vdd
+						<value>1.2</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>Rsense
+						<value>5K</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>cm_cap
+						<value>300f</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>L_in
+						<value>400n</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>L_N
+						<value>300n</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>L_P
+						<value>300n</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>W_in
+						<value>480n</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>W_N
+						<value>360n</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>W_P
+						<value>360n</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>vincm
+						<value>375m</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>N_in
+						<value>58</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>N_P
+						<value>6</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>N_PCAS
+						<value>6</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>N_NCAS
+						<value>6</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>N_N
+						<value>36</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>N_OS
+						<value>60</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>N_OSL
+						<value>20</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>VBPCAS
+						<value>550m</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>VBNCAS
+						<value>740m</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+					<var>VBN
+						<value>560m</value>
+						<dependentTests>
+							<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+						</dependentTests>
+					</var>
+				</vars>
+				<overwritehistoryname>Interactive.0</overwritehistoryname>
+				<plottingoptions>
+					<plottingoption>plottype
+						<value>None</value>
+					</plottingoption>
+					<plottingoption>usewaveformtemplate
+						<value>no</value>
+					</plottingoption>
+					<plottingoption>waveformtemplate
+						<value></value>
+					</plottingoption>
+					<plottingoption>allplottingtemplates
+						<value></value>
+					</plottingoption>
+					<plottingoption>defaultplottingtemplate
+						<value></value>
+					</plottingoption>
+				</plottingoptions>
+				<sortVariableValues>0</sortVariableValues>
+			</checkpoint>
+			<timestamp>May 16 17:27:47 2019</timestamp>
+			<resultsname>/home/aa/users/zhenghan_lin/Desktop/ee240b/bag_workspace_gpdk045/bag240design/OA/bag240/tb_opamp_folded_cascode/adexl/results/data/Interactive.0.rdb</resultsname>
+			<simresults>$AXL_SETUPDB_DIR/results/data/Interactive.0.rdb</simresults>
+			<rawdatadelstrategy>SaveAll
+				<simdatasavemode>All</simdatasavemode>
+			</rawdatadelstrategy>
+			<netlistdelstrategy>SaveAll</netlistdelstrategy>
+			<uselocalpsfdir>false</uselocalpsfdir>
+			<localpsfdir>/tmp/hpse-12.EECS.Berkeley.EDU_zhenghan_lin_172747523</localpsfdir>
+			<psfdir>/home/aa/users/zhenghan_lin/simulation/bag240/tb_opamp_folded_cascode/adexl/results/data/Interactive.0</psfdir>
+			<simdir>$AXL_PROJECT_DIR/bag240/tb_opamp_folded_cascode/adexl/results/data/Interactive.0</simdir>
+			<gendatasheetplotsonsimulation>1</gendatasheetplotsonsimulation>
+			<runlog>/home/aa/users/zhenghan_lin/Desktop/ee240b/bag_workspace_gpdk045/bag240design/OA/bag240/tb_opamp_folded_cascode/adexl/results/data/Interactive.0.log</runlog>
+			<runlogfile>$AXL_SETUPDB_DIR/results/data/Interactive.0.log</runlogfile>
+			<schematicpoint></schematicpoint>
+			<test>all</test>
+		</historyentry>
+	</history>
+</setupdb>
