@@ -25,9 +25,10 @@ def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=
     # configure tb
     tb = prj.configure_testbench(tb_lib=impl_lib, tb_cell=tb_name)
 
-    tb.set_parameter('R1A', sim_params['rc']['R']['1A'])
-    tb.set_parameter('R2A', sim_params['rc']['R']['2A'])
-    tb.set_parameter('R3A', sim_params['rc']['R']['3A'])
+    scale_ratio = sim_params['scale_ratio']
+    tb.set_parameter('R1A', sim_params['rc']['R']['1A']*scale_ratio)
+    tb.set_parameter('R2A', sim_params['rc']['R']['2A']*scale_ratio)
+    tb.set_parameter('R3A', sim_params['rc']['R']['3A']*scale_ratio)
     # not completed yet...
 
     tb.update_testbench()
