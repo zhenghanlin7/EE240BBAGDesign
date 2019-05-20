@@ -4,7 +4,6 @@ from scripts_char.mos_query import get_db
 import pprint
 import matplotlib.pyplot as plt
 
-
 def generate(prj, temp_lib, impl_lib, cell_name, sch_params):
 
     print("Generating schematic ...")
@@ -13,7 +12,7 @@ def generate(prj, temp_lib, impl_lib, cell_name, sch_params):
     dsn.implement_design(impl_lib, top_cell_name=cell_name)
 
 
-def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=True):
+def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params):
 
     # generate tb schematic
     print("Generating testbench ...")
@@ -24,6 +23,8 @@ def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=
     # configure tb
     tb = prj.configure_testbench(tb_lib=impl_lib, tb_cell=tb_name)
     tb.set_parameter('vdd', sim_params[0])
+    tb.set_parameter('Rsense', sim_params[1])
+    tb.add_output('imag', """imag(VF("/voutp") - VF("/voutn"))""")
     tb.update_testbench()
 
     # rum simulation
@@ -31,10 +32,18 @@ def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=
     print(tb.save_dir)
     results = load_sim_results(tb.save_dir)
 
+    print("Hi")
+
+    print(results)
+
+    print("Hi2")
+
     # Get results
     gain = results['gain']
+    phase = results['phase']
     freq = results['freq']
-    return gain, freq
+    real = results['imag']
+    return gain, phase, real, freq
 
 
 def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
@@ -42,13 +51,20 @@ def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
     print("Simulating ...")
 
     generate(prj, temp_lib, impl_lib, cell_name, sch_params)
-    sim_params = {'vdd': 1.2}
 
-    gain, freq = simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=False)
+    gain, phase, real, freq = simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params=[1.2, 5e3])
 
     plt.figure()
-    plt.semilogx(freq,gain)
-    plt.show(block=True)
+    plt.subplot(3,1,1)
+    plt.semilogx(freq,gain,'r')
+
+    plt.subplot(3,1,2)
+    plt.semilogx(freq,phase,'y')
+
+    plt.subplot(3,1,3)
+    plt.semilogx(freq,real,'b')
+
+    plt.show(block=False)
 
 
 if __name__ is '__main__':
