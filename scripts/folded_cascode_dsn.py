@@ -55,6 +55,7 @@ if __name__ is '__main__':
 
     if 'bprj' not in locals():
         bprj = bag.BagProject()
+    #comment
 
     impl_lib = 'bag240_generated'
     temp_lib = 'bag240'

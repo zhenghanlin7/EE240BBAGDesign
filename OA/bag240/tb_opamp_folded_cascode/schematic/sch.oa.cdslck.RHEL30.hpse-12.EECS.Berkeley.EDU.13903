@@ -1,0 +1,16 @@
+#
+# Edit Lock-Stake file. CAUTION: Please do not change.
+#
+# Information about current Edit Lock Owner.
+#
+LockStakeVersion               1.1
+LoginName                      zhenghan_lin
+HostName                       hpse-12.EECS.Berkeley.EDU
+ProcessIdentifier              13903
+ProcessCreationTime_UTC        1558147605
+ProcessCreationTime_Readable   Fri May 17 19:46:45 2019 PDT
+AppIdentifier                  OA File System Design Manager
+OSType                         unix
+ReasonForPlacingEditLock       OpenAccess edit lock
+FilePathUsedToEditLock         /home/aa/users/zhenghan_lin/Desktop/ee240b/bag_workspace_gpdk045/bag240design/OA/bag240/tb_opamp_folded_cascode/schematic/sch.oa.cdslck
+TimeEditLocked                 Mon May 20 14:17:38 2019 PDT
