@@ -7,12 +7,12 @@ from typing import Dict
 from bag.design import Module
 
 
-yaml_file = pkg_resources.resource_filename(__name__, os.path.join('netlist_info', 'tb_opamp_folded_cascode.yaml'))
+yaml_file = pkg_resources.resource_filename(__name__, os.path.join('netlist_info', 'filter.yaml'))
 
 
 # noinspection PyPep8Naming
-class bag240__tb_opamp_folded_cascode(Module):
-    """Module for library bag240 cell tb_opamp_folded_cascode.
+class bag240__filter(Module):
+    """Module for library bag240 cell filter.
 
     Fill in high level description here.
     """
@@ -31,11 +31,9 @@ class bag240__tb_opamp_folded_cascode(Module):
             dictionary from parameter names to descriptions.
         """
         return dict(
-            impl_lib = 'implementation library',
-            cell_name = 'cell name'
         )
 
-    def design(self,impl_lib, cell_name):
+    def design(self):
         """To be overridden by subclasses to design this module.
 
         This method should fill in values for all parameters in
@@ -51,6 +49,4 @@ class bag240__tb_opamp_folded_cascode(Module):
         restore_instance()
         array_instance()
         """
-        self.instances['I6'].design()
-        self.replace_instance_master('I4', lib_name=impl_lib, cell_name='opamp_cmfb_cs', static='TRUE')
-        self.replace_instance_master('I0', lib_name=impl_lib, cell_name=cell_name, static='TRUE')
+        pass
