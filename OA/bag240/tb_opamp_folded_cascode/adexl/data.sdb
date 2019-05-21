@@ -53,137 +53,118 @@
 						<value>$AXL_SETUPDB_DIR/test_states</value>
 					</option>
 					<option>state
-						<value>tmpstate.520754087</value>
+						<value>spectre_state1</value>
 					</option>
 				</origoptions>
-				<outputs></outputs>
 			</test>
 		</tests>
 		<vars>
-			<var>amp
-				<value>200m</value>
-				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
-				</dependentTests>
-			</var>
-			<var>vdd
-				<value>1.2</value>
-				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
-				</dependentTests>
-			</var>
-			<var>Rsense
-				<value>5K</value>
-				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
-				</dependentTests>
-			</var>
 			<var>cm_cap
 				<value>300f</value>
 				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
 				</dependentTests>
 			</var>
 			<var>L_in
 				<value>400n</value>
 				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
 				</dependentTests>
 			</var>
 			<var>L_N
 				<value>300n</value>
 				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
 				</dependentTests>
 			</var>
 			<var>L_P
 				<value>300n</value>
 				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
-				</dependentTests>
-			</var>
-			<var>W_in
-				<value>480n</value>
-				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
-				</dependentTests>
-			</var>
-			<var>W_N
-				<value>360n</value>
-				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
-				</dependentTests>
-			</var>
-			<var>W_P
-				<value>360n</value>
-				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
-				</dependentTests>
-			</var>
-			<var>vincm
-				<value>375m</value>
-				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
 				</dependentTests>
 			</var>
 			<var>N_in
 				<value>58</value>
 				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
-				</dependentTests>
-			</var>
-			<var>N_P
-				<value>6</value>
-				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
-				</dependentTests>
-			</var>
-			<var>N_PCAS
-				<value>6</value>
-				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
-				</dependentTests>
-			</var>
-			<var>N_NCAS
-				<value>6</value>
-				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
 				</dependentTests>
 			</var>
 			<var>N_N
 				<value>36</value>
 				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>N_NCAS
+				<value>6</value>
+				<dependentTests>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
 				</dependentTests>
 			</var>
 			<var>N_OS
 				<value>60</value>
 				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
 				</dependentTests>
 			</var>
 			<var>N_OSL
 				<value>20</value>
 				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
 				</dependentTests>
 			</var>
-			<var>VBPCAS
-				<value>550m</value>
+			<var>N_P
+				<value>6</value>
 				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
 				</dependentTests>
 			</var>
-			<var>VBNCAS
-				<value>740m</value>
+			<var>N_PCAS
+				<value>6</value>
 				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>Rsense
+				<value>5k</value>
+				<dependentTests>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
 				</dependentTests>
 			</var>
 			<var>VBN
 				<value>560m</value>
 				<dependentTests>
-					<dependentTest omitted="0">bag240:tb_opamp_folded_cascode:1</dependentTest>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>VBNCAS
+				<value>740m</value>
+				<dependentTests>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>VBPCAS
+				<value>550m</value>
+				<dependentTests>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>W_in
+				<value>480n</value>
+				<dependentTests>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>W_N
+				<value>360n</value>
+				<dependentTests>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
+				</dependentTests>
+			</var>
+			<var>W_P
+				<value>360n</value>
+				<dependentTests>
+					<dependentTest enabled="1">bag240:tb_opamp_folded_cascode:1</dependentTest>
 				</dependentTests>
 			</var>
 		</vars>

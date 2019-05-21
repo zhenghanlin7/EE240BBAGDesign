@@ -23,18 +23,25 @@ def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=
 
     # configure tb
     tb = prj.configure_testbench(tb_lib=impl_lib, tb_cell=tb_name)
-    tb.set_parameter('vdd', sim_params[0])
+    tb.set_parameter('Rsense',sim_params['Rsense'])
     tb.update_testbench()
 
     # rum simulation
     tb.run_simulation()
     print(tb.save_dir)
-    results = load_sim_results(tb.save_dir)
 
     # Get results
-    gain = results['gain']
+    results = load_sim_results(tb.save_dir)
+
+    #print(results)
+    print('Gain=',results['dc_gain'])
+    print('BW=', results['band_width']/(10**6),'MHz')
+    print('GBW=', results['unity_gain']/(10**9), 'GHz')
+    print('PM=', results['phase_margin'])
+    gain = results['amp_gain']
+    phase = results['amp_phase']
     freq = results['freq']
-    return gain, freq
+    return gain, phase, freq
 
 
 def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
@@ -42,13 +49,16 @@ def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
     print("Simulating ...")
 
     generate(prj, temp_lib, impl_lib, cell_name, sch_params)
-    sim_params = {'vdd': 1.2}
+    sim_params = {'Rsense': 5000}
 
-    gain, freq = simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=False)
+    gain, phase, freq = simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=False)
 
     plt.figure()
+    plt.subplot(2,1,1)
     plt.semilogx(freq,gain)
-    plt.show(block=True)
+    plt.subplot(2,1,2)
+    plt.semilogx(freq,gain)
+    plt.show(block=False)
 
 
 if __name__ is '__main__':

@@ -2,6 +2,26 @@ lib_name: bag240
 cell_name: opamp_cmfb_cs
 pins: [ "vss", "vdd", "vo", "vin", "vip", "vref" ]
 instances:
+  PM9:
+    lib_name: BAG_prim
+    cell_name: pmos4_svt
+    instpins:
+      D:
+        direction: inputOutput
+        net_name: "net043"
+        num_bits: 1
+      B:
+        direction: inputOutput
+        net_name: "vdd"
+        num_bits: 1
+      G:
+        direction: inputOutput
+        net_name: "vref"
+        num_bits: 1
+      S:
+        direction: inputOutput
+        net_name: "vdd"
+        num_bits: 1
   PM5:
     lib_name: BAG_prim
     cell_name: pmos4_svt
@@ -42,26 +62,6 @@ instances:
         direction: inputOutput
         net_name: "net043"
         num_bits: 1
-  PM9:
-    lib_name: BAG_prim
-    cell_name: pmos4_svt
-    instpins:
-      D:
-        direction: inputOutput
-        net_name: "net043"
-        num_bits: 1
-      B:
-        direction: inputOutput
-        net_name: "vdd"
-        num_bits: 1
-      G:
-        direction: inputOutput
-        net_name: "vref"
-        num_bits: 1
-      S:
-        direction: inputOutput
-        net_name: "vdd"
-        num_bits: 1
   PIN12:
     lib_name: basic
     cell_name: iopin
@@ -86,13 +86,13 @@ instances:
     lib_name: basic
     cell_name: opin
     instpins: {}
-  NM11:
+  NM10:
     lib_name: BAG_prim
     cell_name: nmos4_svt
     instpins:
       D:
         direction: inputOutput
-        net_name: "net033"
+        net_name: "vo"
         num_bits: 1
       B:
         direction: inputOutput
@@ -106,13 +106,13 @@ instances:
         direction: inputOutput
         net_name: "vss"
         num_bits: 1
-  NM10:
+  NM11:
     lib_name: BAG_prim
     cell_name: nmos4_svt
     instpins:
       D:
         direction: inputOutput
-        net_name: "vo"
+        net_name: "net033"
         num_bits: 1
       B:
         direction: inputOutput
