@@ -31,6 +31,7 @@ def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=
     tb.run_simulation()
     print(tb.save_dir)
     results = load_sim_results(tb.save_dir)
+    print(results)
 
     gain = results['gain']
     freq = results['freq']

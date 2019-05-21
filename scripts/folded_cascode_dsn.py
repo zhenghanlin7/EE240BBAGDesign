@@ -22,9 +22,22 @@ def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params):
 
     # configure tb
     tb = prj.configure_testbench(tb_lib=impl_lib, tb_cell=tb_name)
+<<<<<<< HEAD
 
     tb.set_parameter('Rsense',sim_params['Rsense'])
 
+=======
+    tb.set_parameter('vdd', sim_params[0])
+    tb.set_parameter('Rsense', sim_params[1])
+    #tb.add_output('imagoutp', """imag(VF("/voutp") - VF("/voutn"))""")
+    #tb.add_output('vdcoutp', """VDC("/voutp")""")
+    #tb.add_output('dcgain1', """value(gain 10)""")
+    tb.add_output('dcgain2',"""value(mag(VF("/voutp") - VF("/voutn")) 10)""")
+
+    tb.add_output('bw', """cross( (value(mag(VF("/voutp") - VF("/voutn")) 10) / mag(VF("/voutp") - VF("/voutn")) ) 1.414)""")
+    tb.add_output('gbw1',"""cross( mag(VF("/voutp") - VF("/voutn"))  1)""")
+    tb.add_output('gbw2', """cross( gain  0)""")
+>>>>>>> yikuan
     tb.update_testbench()
 
     # rum simulation

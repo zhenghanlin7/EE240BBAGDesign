@@ -31,9 +31,17 @@ class bag240__tb_filter(Module):
             dictionary from parameter names to descriptions.
         """
         return dict(
+<<<<<<< HEAD
         )
 
     def design(self):
+=======
+            impl_lib='implementation library',
+            cell_name='cell name'
+        )
+
+    def design(self, impl_lib, cell_name):
+>>>>>>> yikuan
         """To be overridden by subclasses to design this module.
 
         This method should fill in values for all parameters in
@@ -49,4 +57,8 @@ class bag240__tb_filter(Module):
         restore_instance()
         array_instance()
         """
+<<<<<<< HEAD
+=======
+        self.replace_instance_master('I0', impl_lib, cell_name, static='TRUE')
+>>>>>>> yikuan
         pass

@@ -54,6 +54,7 @@ class bag240__opamp_folded_cascode(Module):
         array_instance()
         """
         local_dict = locals()
+        print("Generating folded cascode main amp...")
         self.instances['PMINN'].design(l=mos_l['L_in'], w=mos_w['W_in'], nf=mos_nf['N_in'], intent=mos_intent)
         self.instances['PMINP'].design(l=mos_l['L_in'], w=mos_w['W_in'], nf=mos_nf['N_in'], intent=mos_intent)
         self.instances['PMCM'].design(l=mos_l['L_in'], w=mos_w['W_P'], nf=2*mos_nf['N_in'], intent=mos_intent)

@@ -318,7 +318,11 @@ instances:
     lib_name: basic
     cell_name: iopin
     instpins: {}
+<<<<<<< HEAD
   I17:
+=======
+  OPAMP2:
+>>>>>>> yikuan
     lib_name: bag240
     cell_name: opamp_wrap
     instpins:
@@ -366,7 +370,11 @@ instances:
         direction: input
         net_name: "net18"
         num_bits: 1
+<<<<<<< HEAD
   I16:
+=======
+  OPAMP1:
+>>>>>>> yikuan
     lib_name: bag240
     cell_name: opamp_wrap
     instpins:
