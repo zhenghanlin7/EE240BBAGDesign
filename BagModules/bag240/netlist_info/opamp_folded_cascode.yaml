@@ -206,26 +206,6 @@ instances:
     lib_name: basic
     cell_name: opin
     instpins: {}
-  PMCM:
-    lib_name: BAG_prim
-    cell_name: pmos4_svt
-    instpins:
-      S:
-        direction: inputOutput
-        net_name: "vdd"
-        num_bits: 1
-      D:
-        direction: inputOutput
-        net_name: "net75"
-        num_bits: 1
-      B:
-        direction: inputOutput
-        net_name: "vdd"
-        num_bits: 1
-      G:
-        direction: inputOutput
-        net_name: "vref"
-        num_bits: 1
   PMINP:
     lib_name: BAG_prim
     cell_name: pmos4_svt
@@ -345,6 +325,26 @@ instances:
       S:
         direction: inputOutput
         net_name: "vdd"
+        num_bits: 1
+  PMCM:
+    lib_name: BAG_prim
+    cell_name: pmos4_svt
+    instpins:
+      S:
+        direction: inputOutput
+        net_name: "vdd"
+        num_bits: 1
+      D:
+        direction: inputOutput
+        net_name: "net75"
+        num_bits: 1
+      B:
+        direction: inputOutput
+        net_name: "vdd"
+        num_bits: 1
+      G:
+        direction: inputOutput
+        net_name: "vref"
         num_bits: 1
   C0:
     lib_name: analogLib

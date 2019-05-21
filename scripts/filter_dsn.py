@@ -10,7 +10,7 @@ def generate(prj, temp_lib, impl_lib, cell_name, sch_params):
 
     print("Generating schematic ...")
     dsn = prj.create_design_module(temp_lib, cell_name)
-    dsn.design(**sch_params)
+    dsn.design(impl_lib=impl_lib,**sch_params)
     dsn.implement_design(impl_lib, top_cell_name=cell_name)
 
 
@@ -26,9 +26,17 @@ def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=
     tb = prj.configure_testbench(tb_lib=impl_lib, tb_cell=tb_name)
 
     scale_ratio = sim_params['scale_ratio']
-    tb.set_parameter('R1A', sim_params['rc']['R']['1A']*scale_ratio)
-    tb.set_parameter('R2A', sim_params['rc']['R']['2A']*scale_ratio)
-    tb.set_parameter('R3A', sim_params['rc']['R']['3A']*scale_ratio)
+    print("Running simulation... scale ratio is",scale_ratio)
+    tb.set_parameter('R1A', sim_params['rc']['R']['1A']/scale_ratio)
+    tb.set_parameter('R2A', sim_params['rc']['R']['2A']/scale_ratio)
+    tb.set_parameter('R3A', sim_params['rc']['R']['3A']/scale_ratio)
+    tb.set_parameter('R1B', sim_params['rc']['R']['1B']/scale_ratio)
+    tb.set_parameter('R2B', sim_params['rc']['R']['2B']/scale_ratio)
+    tb.set_parameter('R3B', sim_params['rc']['R']['3B']/scale_ratio)
+    tb.set_parameter('C1A', sim_params['rc']['C']['1A']*scale_ratio)
+    tb.set_parameter('C1B', sim_params['rc']['C']['1B']*scale_ratio)
+    tb.set_parameter('C2A', sim_params['rc']['C']['2A']*scale_ratio)
+    tb.set_parameter('C2B', sim_params['rc']['C']['2B']*scale_ratio)
     # not completed yet...
 
     tb.update_testbench()
@@ -39,10 +47,16 @@ def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=
     results = load_sim_results(tb.save_dir)
 
     # Get results
-    gain = results['gain']
+    gain = results['vodm_dB']
     freq = results['freq']
     int_noise = results['int_noise']
-    return gain, freq, int_noise
+    R2_noise = results['R2_noise']
+    NM0_noise = results['NM0_noise']
+    print("NM0_noise is ",NM0_noise, "R2_noise is",R2_noise)
+    flag = 1
+    if(R2_noise > NM0_noise):
+        flag = 0
+    return gain, freq, int_noise, flag
 
 
 def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
@@ -66,21 +80,31 @@ def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
     sim_params = {'scale_ratio': scale_ratio,'rc':rc}
     scale_ratio_list = []
     int_noise_list = []
+    i = 0
     while int_noise > 5e-10:
-        gain, freq,  int_noise = \
+        gain, freq,  int_noise, flag = \
             simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=False)
 
         # add to lists
         scale_ratio_list.append(scale_ratio)
         int_noise_list.append(int_noise)
-        print(f"Output integrated noise is {int_noise} @ scale ratio is {scale_ratio}")
+        i = i+1
+        print("Output integrated noise is ", int_noise," @ scale ratio is", scale_ratio)
 
         # change scaling ratio
         scale_ratio = scale_ratio * 1.189 # 2^(1/4)
+        sim_params = {'scale_ratio': scale_ratio, 'rc': rc}
+        #if(i>1 and ((int_noise_list[i-1]-int_noise)/(int_noise_list[i-1]) < 0.05)):
+        if(flag == 1): #transistor noise surpasses resistor noise
+            print("Output integrated noise is ", int_noise," @ scale ratio is", scale_ratio, \
+            "stop scaling RC, resizing transistors...")
+
+            break;
 
 
     plt.figure()
-    plt.semilogx(freq,gain)
+    plt.semilogx(scale_ratio_list,int_noise_list)
+    plt.title('Scaling ratio vs noise power (V^2)')
     plt.show(block=True)
 
 def get_rc_param(fc, C_1):
@@ -102,7 +126,7 @@ def get_rc_param(fc, C_1):
     R_1A = 1 / (FSF_A * fc * 2*3.1415926*C_1 * np.sqrt(N_A * M))
     R_2A = R_1A
     R_3A = M * R_1A
-    C_2A = N_A * C_1
+    C_2A = N_A * C_1 * 2
 
     R_1B = 1 / (FSF_B * fc * 2*3.1415926*C_1 * np.sqrt(N_B * M))
     R_2B = R_1B
@@ -132,12 +156,12 @@ if __name__ is '__main__':
         mos_w={'W_in':480e-9, 'W_N':360e-9, 'W_P':360e-9},
         mos_nf={'N_in':58, 'N_P':6, 'N_PCAS': 6, 'N_NCAS':6, 'N_N':36, 'N_OS':60, 'N_OSL':20},
         mos_intent='svt',
+        #impl_lib='bag240_generated',
         R={'1A':8.66e3,'2A':8.66e3,'3A':6.49e3,'1B':5.11e3,'2B':5.11e3,'3B':3.65e3},
         baseC=1,
         C={'1A':1e-12,'2A':2.26e-12,'1B':1e-12,'2B':5.36e-12},
         fc = 20e6
     )
-
 
 
     design(bprj, temp_lib, impl_lib, tb_name, cell_name, sch_params)

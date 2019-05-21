@@ -58,11 +58,11 @@ instances:
         direction: inputOutput
         net_name: "gnd!"
         num_bits: 1
-  PIN4:
+  PIN0:
     lib_name: basic
     cell_name: iopin
     instpins: {}
-  PIN0:
+  PIN4:
     lib_name: basic
     cell_name: iopin
     instpins: {}
