@@ -14,7 +14,7 @@ def generate(prj, temp_lib, impl_lib, cell_name, sch_params):
     dsn.implement_design(impl_lib, top_cell_name=cell_name)
 
 
-def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=True):
+def simulate_RC(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params):
 
     # generate tb schematic
     print("Generating testbench ...")
@@ -26,7 +26,8 @@ def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=
     tb = prj.configure_testbench(tb_lib=impl_lib, tb_cell=tb_name)
 
     scale_ratio = sim_params['scale_ratio']
-    print("Running simulation... scale ratio is",scale_ratio)
+    print("    Running simulation... scale ratio is",scale_ratio)
+    print('    (R = R *', scale_ratio, ' C = C /', scale_ratio,')')
     tb.set_parameter('R1A', sim_params['rc']['R']['1A']/scale_ratio)
     tb.set_parameter('R2A', sim_params['rc']['R']['2A']/scale_ratio)
     tb.set_parameter('R3A', sim_params['rc']['R']['3A']/scale_ratio)
@@ -52,26 +53,116 @@ def simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=
     int_noise = results['int_noise']
     R2_noise = results['R2_noise']
     NM0_noise = results['NM0_noise']
-    print("NM0_noise is ",NM0_noise, "R2_noise is",R2_noise)
-    flag = 1
-    if(R2_noise > NM0_noise):
-        flag = 0
+    print("    NM0_noise is ", NM0_noise, "R2_noise is",R2_noise)
+    flag = True
+    if R2_noise < NM0_noise:
+        flag = False
     return gain, freq, int_noise, flag
+
+
+def simulate_Opamp(prj, temp_lib, impl_lib, sch_params):
+
+    # generate tb schematic
+    dsn = prj.create_design_module(temp_lib, 'opamp_folded_cascode')
+    dsn.design(**sch_params)
+    dsn.implement_design(impl_lib, top_cell_name='opamp_folded_cascode')
+
+    dsn = prj.create_design_module(temp_lib, 'tb_opamp_folded_cascode')
+    dsn.design(impl_lib=impl_lib, cell_name='opamp_folded_cascode')
+    dsn.implement_design(impl_lib, top_cell_name='tb_opamp_folded_cascode')
+
+    # configure tb
+    tb = prj.configure_testbench(tb_lib=impl_lib, tb_cell='tb_opamp_folded_cascode')
+    tb.set_parameter('cm_cap',sch_params['comp_cap'])
+    tb.update_testbench()
+
+    # rum simulation
+    tb.run_simulation()
+
+    # Get DC results
+    results = load_sim_results(tb.save_dir)
+
+    I_in = results['I_branch1']
+    I_branch = results['I_branch2']
+    Vgs_sf = results['Vgs_sf']
+    res_dir = tb.save_dir
+ 
+    return I_in, I_branch, Vgs_sf, res_dir
+
+
+def redesign_Opamp(prj, temp_lib, impl_lib, sch_params):
+    # generate tb schematic
+    print("Re-generating Op-amp schematic ...")
+
+    # increasing the W/L with relative ratio
+    sch_params['mos_l']['L_in'] = sch_params['mos_l']['L_in'] + 200e-9
+    sch_params['mos_l']['L_N'] = sch_params['mos_l']['L_N'] + 150e-9
+    sch_params['mos_l']['L_P'] = sch_params['mos_l']['L_P'] + 150e-9
+    sch_params['mos_w']['W_in'] = sch_params['mos_w']['W_in'] + 240e-9
+    sch_params['mos_w']['W_N'] = sch_params['mos_w']['W_P'] + 180e-9
+    sch_params['mos_w']['W_P'] = sch_params['mos_w']['W_P'] + 180e-9
+    sch_params['comp_cap'] = sch_params['comp_cap'] + 100e-15
+
+    I_in, I_branch, Vgs_sf, dir = simulate_Opamp(prj, temp_lib, impl_lib, sch_params)
+    while (I_in < 140e-6) or (I_in > 160e-6):
+        print()
+        print('Step 3/4: Re-designing Op-Amp')
+        print('    Running 1/3 --Sizing input branch')
+        print('    Now I_in=', I_in*10**6, 'uA   --Goal: 140~160uA')
+        sch_params['mos_nf']['N_in'] = sch_params['mos_nf']['N_in'] + 2 if (I_in < 140e-6) else sch_params['mos_nf']['N_in'] - 2
+        I_in, I_branch, Vgs_sf, res_dir = simulate_Opamp(prj, temp_lib, impl_lib, sch_params)
+
+    while (I_branch < 3e-6) or (I_branch > 10e-6):
+        print()
+        print('Step 3/4: Re-designing Op-Amp')
+        print('    Running 2/3 --Sizing main branch')
+        print('    Now I_branch=', I_branch*10**6, 'uA   --Goal: 3~10uA')
+        sch_params['mos_nf']['N_N'] = sch_params['mos_nf']['N_N'] + 2 if (I_in < 3e-6) else sch_params['mos_nf']['N_N'] - 2
+        I_in, I_branch, Vgs_sf, res_dir = simulate_Opamp(prj, temp_lib, impl_lib, sch_params)
+
+    while (Vgs_sf < 0.48) or (Vgs_sf > 0.55):
+        print()
+        print('Step 3/4: Re-designing Op-Amp')
+        print('    Running 3/3 --Sizing output stage (source follower)')
+        print('    Now Vgs_sf=', Vgs_sf, 'V   --Goal: 0.48~0.55V')
+        sch_params['mos_nf']['N_OS'] = sch_params['mos_nf']['N_OS'] - 4 if (Vgs_sf < 0.48) else sch_params['mos_nf']['N_OS'] + 4
+        I_in, I_branch, Vgs_sf, res_dir = simulate_Opamp(prj, temp_lib, impl_lib, sch_params)
+
+    print()
+    print('Step 3/4: Re-designing Op-Amp finished')
+    print('Now DC is set at:')
+    print('    I_in=', I_in*10**6,'uA (Ref: 150uA)')
+    print('    I_branch=', I_branch*10**6,'uA (Ref: 5uA)')
+    print('    Vgs_sf=', Vgs_sf,'V (Ref: 0.5V)')
+    print()
+
+    results = load_sim_results(res_dir)
+    print('The re-designed Op-Amp has:')
+    print('    Gain=', results['dc_gain'])
+    print('    BW=', results['band_width'] / (10 ** 6), 'MHz')
+    print('    GBW=', results['unity_gain'] / (10 ** 9), 'GHz')
+    print('    PM=', results['phase_margin'])
+
+    return sch_params
 
 
 def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
 
-    print("Simulating ...")
-
     rc = get_rc_param(sch_params['fc'],sch_params['C']['1A'])
-    print(rc)
-    input("hey, is the RC right?")
 
     sch_params['R']=rc['R']
     sch_params['C']=rc['C']
+    print('    All R calculated:')
+    for i in sch_params['R']:
+        print('      R',i,sch_params['R'][i]/1000,'kOhm')
+    print('    All C calculated:')
+    for i in sch_params['C']:
+        print('      C',i,sch_params['C'][i]*10**12,'pF')
 
-    print(sch_params['R'])
-    input("hey, is the R right?")
+    input("Please find more details in the schematic. Press Enter to continue")
+
+    print()
+    print('Step 2/4: Re-sizing RC for Dynamic Range/Noise specs')
 
     generate(prj, temp_lib, impl_lib, cell_name, sch_params)
 
@@ -81,35 +172,43 @@ def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
     scale_ratio_list = []
     int_noise_list = []
     i = 0
-    while int_noise > 5e-10:
-        gain, freq,  int_noise, flag = \
-            simulate(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params, show_plot=False)
+    Noise_spec = 5e-9
+
+    while int_noise > Noise_spec:
+        gain, freq,  int_noise, RC_dominant = simulate_RC(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params)
 
         # add to lists
         scale_ratio_list.append(scale_ratio)
         int_noise_list.append(int_noise)
         i = i+1
-        print("Output integrated noise is ", int_noise," @ scale ratio is", scale_ratio)
+        print()
+        print('Step 3/4: Simulating after updating RC -round',i)
+        print("    Output integrated noise is ", int_noise, 'Goal: ', Noise_spec)
 
         # change scaling ratio
         scale_ratio = scale_ratio * 1.189 # 2^(1/4)
         sim_params = {'scale_ratio': scale_ratio, 'rc': rc}
-        #if(i>1 and ((int_noise_list[i-1]-int_noise)/(int_noise_list[i-1]) < 0.05)):
-        if(flag == 1): #transistor noise surpasses resistor noise
-            print("Output integrated noise is ", int_noise," @ scale ratio is", scale_ratio, \
-            "stop scaling RC, resizing transistors...")
 
-            break;
+        # transistor noise surpasses resistor noise
+        if RC_dominant == False:
+            print("Now Op-amp dominants noise.")
+            print('Step 3/4: Re-designing Op-Amp -round', i)
+            scale_ratio = scale_ratio / 1.189
+            sch_params = redesign_Opamp(prj, temp_lib, impl_lib, sch_params)
 
-
+    print()
+    print('Step 4/4: Fished, printint results')
+    print()
     plt.figure()
     plt.semilogx(scale_ratio_list,int_noise_list)
     plt.title('Scaling ratio vs noise power (V^2)')
     plt.show(block=True)
 
+
 def get_rc_param(fc, C_1):
 
-    print("Calculating RC values for Bessel LPF, fc=",fc/1000000,"MHz.")
+    print('Step 1/4: Calculating RC')
+    print("    Type: Bessel LPF, fc=",fc/1000000,"MHz.")
 
     # params for bessel filter
     Q_A    = 0.5219
@@ -140,7 +239,6 @@ def get_rc_param(fc, C_1):
     )
 
 
-
 if __name__ is '__main__':
 
     if 'bprj' not in locals():
@@ -156,13 +254,13 @@ if __name__ is '__main__':
         mos_w={'W_in':480e-9, 'W_N':360e-9, 'W_P':360e-9},
         mos_nf={'N_in':58, 'N_P':6, 'N_PCAS': 6, 'N_NCAS':6, 'N_N':36, 'N_OS':60, 'N_OSL':20},
         mos_intent='svt',
+        comp_cap=300e-15,
         #impl_lib='bag240_generated',
         R={'1A':8.66e3,'2A':8.66e3,'3A':6.49e3,'1B':5.11e3,'2B':5.11e3,'3B':3.65e3},
         baseC=1,
         C={'1A':1e-12,'2A':2.26e-12,'1B':1e-12,'2B':5.36e-12},
         fc = 20e6
     )
-
 
     design(bprj, temp_lib, impl_lib, tb_name, cell_name, sch_params)
 

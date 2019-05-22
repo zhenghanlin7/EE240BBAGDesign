@@ -18,10 +18,7 @@ class bag240__opamp_wrap(Module):
     """
 
     def __init__(self, bag_config, parent=None, prj=None, **kwargs):
-<<<<<<< HEAD
-=======
         print("Initializing Opamp_wrap...")
->>>>>>> yikuan
         Module.__init__(self, bag_config, yaml_file, parent=parent, prj=prj, **kwargs)
 
     @classmethod
@@ -35,16 +32,10 @@ class bag240__opamp_wrap(Module):
             dictionary from parameter names to descriptions.
         """
         return dict(
-<<<<<<< HEAD
-        )
-
-    def design(self):
-=======
 
         )
 
     def design(self, impl_lib, mos_l, mos_w, mos_nf, mos_intent, **kwargs):
->>>>>>> yikuan
         """To be overridden by subclasses to design this module.
 
         This method should fill in values for all parameters in
@@ -60,13 +51,9 @@ class bag240__opamp_wrap(Module):
         restore_instance()
         array_instance()
         """
-<<<<<<< HEAD
-        pass
-=======
         local_dict = locals()
         print("Generating Opamp_wrap...")
         self.replace_instance_master('I4', impl_lib, 'opamp_cmfb_cs', static='TRUE')
         self.replace_instance_master('I0', impl_lib, 'opamp_folded_cascode', static='TRUE')
         #self.instances['I0'].design(mos_l, mos_w, mos_nf, mos_intent)
 
->>>>>>> yikuan

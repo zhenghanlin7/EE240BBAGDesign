@@ -9,11 +9,11 @@ tmp1 = make_sevOutputStruct()
 tmp1 = (ncons nil)
 )
 tmp1->definedIn = ""
-tmp1->name = "vop"
+tmp1->name = "von"
 tmp1->expression = (let
 (tmp1 tmp2)
 tmp1 = 'VF
-tmp2 = "/net6"
+tmp2 = "/net5"
 list(tmp1 tmp2)
 )
 tmp1->signal = nil
@@ -58,11 +58,11 @@ tmp1 = make_sevOutputStruct()
 tmp1 = (ncons nil)
 )
 tmp1->definedIn = ""
-tmp1->name = "von"
+tmp1->name = "vop"
 tmp1->expression = (let
 (tmp1 tmp2)
 tmp1 = 'VF
-tmp2 = "/net5"
+tmp2 = "/net6"
 list(tmp1 tmp2)
 )
 tmp1->signal = nil

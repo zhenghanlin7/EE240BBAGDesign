@@ -31,11 +31,6 @@ class bag240__filter(Module):
             dictionary from parameter names to descriptions.
         """
         return dict(
-<<<<<<< HEAD
-        )
-
-    def design(self):
-=======
             mos_l = 'Channel length',
             mos_w='transistor width',
             mos_nf='number of fingers',
@@ -48,7 +43,6 @@ class bag240__filter(Module):
         )
 
     def design(self,mos_l, mos_w, mos_nf, mos_intent, impl_lib, R, baseC, C, fc,**kwargs):
->>>>>>> yikuan
         """To be overridden by subclasses to design this module.
 
         This method should fill in values for all parameters in
@@ -64,13 +58,10 @@ class bag240__filter(Module):
         restore_instance()
         array_instance()
         """
-<<<<<<< HEAD
-=======
         local_dict = locals()
         print("Generating filter...")
-        self.replace_instance_master('OPAMP1', impl_lib, 'opamp_folded_casode', static='TRUE')
-        self.replace_instance_master('OPAMP2', impl_lib, 'opamp_folded_casode', static='TRUE')
+        self.replace_instance_master('OPAMP1', impl_lib, 'opamp_wrap', static='TRUE')
+        self.replace_instance_master('OPAMP2', impl_lib, 'opamp_wrap', static='TRUE')
         #self.instances['OPAMP1'].design(impl_lib, mos_l, mos_w, mos_nf, mos_intent)
         #self.instances['OPAMP2'].design(impl_lib, mos_l, mos_w, mos_nf, mos_intent)
->>>>>>> yikuan
         pass
