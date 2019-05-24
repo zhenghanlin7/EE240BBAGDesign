@@ -259,7 +259,7 @@ tmp29 = make_sevVariableStruct()
 tmp29 = (ncons nil)
 )
 tmp29->name = "baseC"
-tmp29->expression = "1*0.95"
+tmp29->expression = "1"
 tmp29->index = 29
 (unless tmp30
 tmp30 = make_sevVariableStruct()
@@ -268,7 +268,7 @@ tmp30 = make_sevVariableStruct()
 tmp30 = (ncons nil)
 )
 tmp30->name = "baseR"
-tmp30->expression = "0.5"
+tmp30->expression = "1"
 tmp30->index = 30
 (unless tmp31
 tmp31 = make_sevVariableStruct()

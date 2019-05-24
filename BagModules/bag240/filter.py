@@ -59,9 +59,9 @@ class bag240__filter(Module):
         array_instance()
         """
         local_dict = locals()
-        print("Generating filter...")
+        # print("Generating filter...")
         self.replace_instance_master('OPAMP1', impl_lib, 'opamp_wrap', static='TRUE')
         self.replace_instance_master('OPAMP2', impl_lib, 'opamp_wrap', static='TRUE')
-        #self.instances['OPAMP1'].design(impl_lib, mos_l, mos_w, mos_nf, mos_intent)
-        #self.instances['OPAMP2'].design(impl_lib, mos_l, mos_w, mos_nf, mos_intent)
+        # self.instances['OPAMP1'].design(impl_lib, mos_l, mos_w, mos_nf, mos_intent)
+        # self.instances['OPAMP2'].design(impl_lib, mos_l, mos_w, mos_nf, mos_intent)
         pass

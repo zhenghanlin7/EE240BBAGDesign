@@ -27,7 +27,7 @@ def simulate_RC(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params):
 
     scale_ratio = sim_params['scale_ratio']
     print("    Running simulation... scale ratio is",scale_ratio)
-    print('    (R = R *', scale_ratio, ' C = C /', scale_ratio,')')
+    print('    (R = R /', scale_ratio, ' C = C *', scale_ratio,')')
     tb.set_parameter('R1A', sim_params['rc']['R']['1A']/scale_ratio)
     tb.set_parameter('R2A', sim_params['rc']['R']['2A']/scale_ratio)
     tb.set_parameter('R3A', sim_params['rc']['R']['3A']/scale_ratio)
@@ -53,7 +53,14 @@ def simulate_RC(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params):
     int_noise = results['int_noise']
     R2_noise = results['R2_noise']
     NM0_noise = results['NM0_noise']
-    print("    NM0_noise is ", NM0_noise, "R2_noise is",R2_noise)
+    phase = results['vodm_phase']
+
+    # plt.figure()
+    # plt.subplot(2, 1, 1)
+    # plt.semilogx(freq, gain)
+    # plt.subplot(2, 1, 2)
+    # plt.semilogx(freq, phase)
+    print("    NM0_noise is ", NM0_noise, "    R2_noise is",R2_noise)
     flag = True
     if R2_noise < NM0_noise:
         flag = False
@@ -112,13 +119,27 @@ def redesign_Opamp(prj, temp_lib, impl_lib, sch_params):
         sch_params['mos_nf']['N_in'] = sch_params['mos_nf']['N_in'] + 2 if (I_in < 140e-6) else sch_params['mos_nf']['N_in'] - 2
         I_in, I_branch, Vgs_sf, res_dir = simulate_Opamp(prj, temp_lib, impl_lib, sch_params)
 
-    while (I_branch < 3e-6) or (I_branch > 10e-6):
+    print('Step 3/4: Re-designing Op-Amp')
+    print('    Done 1/3 --Sizing input branch')
+    flag = 0
+    direc = 0
+    if I_branch < 2e-6:
+        direc = 1
+    while (I_branch < 2e-6) or (I_branch > 9e-6):
         print()
         print('Step 3/4: Re-designing Op-Amp')
         print('    Running 2/3 --Sizing main branch')
-        print('    Now I_branch=', I_branch*10**6, 'uA   --Goal: 3~10uA')
-        sch_params['mos_nf']['N_N'] = sch_params['mos_nf']['N_N'] + 2 if (I_in < 3e-6) else sch_params['mos_nf']['N_N'] - 2
+        print('    Now I_branch=', I_branch*10**6, 'uA   --Goal: 2~9uA')
+        sch_params['mos_nf']['N_N'] = sch_params['mos_nf']['N_N'] + 2 if (I_branch < 2e-6) else sch_params['mos_nf']['N_N'] - 2
         I_in, I_branch, Vgs_sf, res_dir = simulate_Opamp(prj, temp_lib, impl_lib, sch_params)
+        if (direc == 0 and I_branch > 9e-6) or (direc== 1 and I_branch < 2e-6):
+            flag = 1
+            break
+    if flag==1 and direc==1:
+        sch_params['mos_nf']['N_N'] = sch_params['mos_nf']['N_N'] + 2
+
+    print('Step 3/4: Re-designing Op-Amp')
+    print('    Done 2/3 --Sizing main branch')
 
     while (Vgs_sf < 0.48) or (Vgs_sf > 0.55):
         print()
@@ -127,6 +148,11 @@ def redesign_Opamp(prj, temp_lib, impl_lib, sch_params):
         print('    Now Vgs_sf=', Vgs_sf, 'V   --Goal: 0.48~0.55V')
         sch_params['mos_nf']['N_OS'] = sch_params['mos_nf']['N_OS'] - 4 if (Vgs_sf < 0.48) else sch_params['mos_nf']['N_OS'] + 4
         I_in, I_branch, Vgs_sf, res_dir = simulate_Opamp(prj, temp_lib, impl_lib, sch_params)
+
+    print('Step 3/4: Re-designing Op-Amp')
+    print('    Done 3/3 --Sizing output stage (source follower)')
+
+    I_in, I_branch, Vgs_sf, res_dir = simulate_Opamp(prj, temp_lib, impl_lib, sch_params)
 
     print()
     print('Step 3/4: Re-designing Op-Amp finished')
@@ -159,7 +185,8 @@ def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
     for i in sch_params['C']:
         print('      C',i,sch_params['C'][i]*10**12,'pF')
 
-    input("Please find more details in the schematic. Press Enter to continue")
+    # input("Please find more details in the schematic. Press Enter to continue")
+    print('Please find more details in the schematic.')
 
     print()
     print('Step 2/4: Re-sizing RC for Dynamic Range/Noise specs')
@@ -172,7 +199,7 @@ def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
     scale_ratio_list = []
     int_noise_list = []
     i = 0
-    Noise_spec = 5e-9
+    Noise_spec = 1e-8
 
     while int_noise > Noise_spec:
         gain, freq,  int_noise, RC_dominant = simulate_RC(prj, temp_lib, impl_lib, tb_name, cell_name, sim_params)
@@ -180,10 +207,10 @@ def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
         # add to lists
         scale_ratio_list.append(scale_ratio)
         int_noise_list.append(int_noise)
-        i = i+1
+        i = i + 1
         print()
         print('Step 3/4: Simulating after updating RC -round',i)
-        print("    Output integrated noise is ", int_noise, 'Goal: ', Noise_spec)
+        print('    Output integrated noise is ', int_noise, 'Goal: ', Noise_spec)
 
         # change scaling ratio
         scale_ratio = scale_ratio * 1.189 # 2^(1/4)
@@ -200,7 +227,8 @@ def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
     print('Step 4/4: Fished, printint results')
     print()
     plt.figure()
-    plt.semilogx(scale_ratio_list,int_noise_list)
+    # plt.semilogx(scale_ratio_list,int_noise_list)
+    plt.plot(int_noise_list)
     plt.title('Scaling ratio vs noise power (V^2)')
     plt.show(block=True)
 
@@ -225,7 +253,7 @@ def get_rc_param(fc, C_1):
     R_1A = 1 / (FSF_A * fc * 2*3.1415926*C_1 * np.sqrt(N_A * M))
     R_2A = R_1A
     R_3A = M * R_1A
-    C_2A = N_A * C_1 * 2
+    C_2A = N_A * C_1
 
     R_1B = 1 / (FSF_B * fc * 2*3.1415926*C_1 * np.sqrt(N_B * M))
     R_2B = R_1B
@@ -259,7 +287,7 @@ if __name__ is '__main__':
         R={'1A':8.66e3,'2A':8.66e3,'3A':6.49e3,'1B':5.11e3,'2B':5.11e3,'3B':3.65e3},
         baseC=1,
         C={'1A':1e-12,'2A':2.26e-12,'1B':1e-12,'2B':5.36e-12},
-        fc = 20e6
+        fc=20e6
     )
 
     design(bprj, temp_lib, impl_lib, tb_name, cell_name, sch_params)

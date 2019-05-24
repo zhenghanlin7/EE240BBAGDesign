@@ -59,7 +59,7 @@ def design(prj, temp_lib, impl_lib, tb_name, cell_name, sch_params):
     plt.subplot(2,1,1)
     plt.semilogx(freq,gain)
     plt.subplot(2,1,2)
-    plt.semilogx(freq,gain)
+    plt.semilogx(freq,phase)
 
     plt.show(block=False)
 
